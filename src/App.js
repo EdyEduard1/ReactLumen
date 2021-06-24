@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Switch, Route } from "react-router-dom";
+import Login from "./components/Login";
+import ListAllBoards from "./components/ListAllBoards";
+import UserProvider from "./context/UserProvider";
+import EditBoard from "./components/EditBoard";
+import AddBoard from "./components/AddBoard";
+import PrivateRoute from "./components/PrivateRoute";
+import DeleteBoard from "./components/DeleteBoard";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserProvider>
+      <div className="App">
+        <Switch>
+          <PrivateRoute path="/allboards" exact component={ListAllBoards} />
+          <Route path="/login" exact component={Login} />
+          <PrivateRoute path="/edit/board/:id" exact component={EditBoard} />
+          <PrivateRoute path="/board/add" exact component={AddBoard} />
+          <PrivateRoute
+            path="/delete/board/:id"
+            exact
+            component={DeleteBoard}
+          />
+        </Switch>
+      </div>
+    </UserProvider>
   );
 }
 
-export default App;
+export default App
